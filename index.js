@@ -6,6 +6,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 
+
 const users = require('./routes/users');
 
 // Mongoose setup
@@ -25,6 +26,10 @@ const port = 3000;
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
+
 
 // Static Files
 app.use(express.static(path.join(__dirname, 'public')))
