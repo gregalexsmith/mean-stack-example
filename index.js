@@ -5,7 +5,7 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
-
+const serverConfig = require('./config/serverConfig');
 const users = require('./routes/users');
 
 // Mongoose setup
@@ -14,13 +14,12 @@ mongoose.connection.on('connected', () => {
   console.log('Connected to database: ' + config.database);
 })
 mongoose.connection.on('error', (err) => {
-  console.err('Database Error: ' + err);
+  console.log('Database Error: ' + err);
 })
-
 
 // Express setup
 const app = express();
-const port = 3000;
+const port = serverConfig.port;
 
 // Middleware
 app.use(cors());

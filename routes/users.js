@@ -12,6 +12,7 @@ router.post('/register', (req, res, next) => {
     username: req.body.username,
     password: req.body.password
   });
+  console.log(req.body);
   User.addUser(newUser, (err, user) => {
     if (err) {
       res.json({success: false, msg: 'failed to register user'})
@@ -25,6 +26,7 @@ router.post('/register', (req, res, next) => {
 router.post('/authenticate', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
+  console.log(req.body);
   User.getUserByUsername(username, (err, user) => {
     if (err) {
       throw err;

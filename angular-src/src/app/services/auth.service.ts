@@ -2,24 +2,27 @@ import { Injectable } from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
   authToken: any;
   user: any;
-
+  path:String;
+  usersUrl:String = environment.apiBaseUrl + '/users'
+  
   constructor(private http:Http) { }
 
   registerUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/users/register', user, {headers: headers}).map(res => res.json())
+    return this.http.post(this.usersUrl + '/register', user, {headers: headers}).map(res => res.json())
   }
 
   authenticateUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers}).map(res => res.json())
+    return this.http.post(this.usersUrl + '/authenticate', user, {headers: headers}).map(res => res.json())
   }
 
   getProfile() {
@@ -27,7 +30,7 @@ export class AuthService {
     headers.append('Content-Type', 'application/json');
     this.loadToken();
     headers.append('Authorization', this.authToken);
-    return this.http.get('http://localhost:3000/users/profile', {headers: headers}).map(res => res.json())
+    return this.http.get(this.usersUrl + '/profile', {headers: headers}).map(res => res.json())
   }
 
   storeUserData(token, user) {
