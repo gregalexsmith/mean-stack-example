@@ -6,7 +6,6 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 
-
 const users = require('./routes/users');
 
 // Mongoose setup
@@ -40,6 +39,9 @@ app.get('/', (req, res) => {
   res.send("Invalid Endpoint")
 })
 app.use('/users', users)
+app.get('*', (req, res) => {
+  res.sendFile(path.join__dirname, 'public/index.html')
+})
 
 // Start Server
 app.listen(port, () => {
